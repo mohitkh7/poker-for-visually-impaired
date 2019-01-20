@@ -10,6 +10,10 @@
     <link rel="stylesheet" type="text/css" href="style.css">
      <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- display card -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/cardsJS/dist/cards.min.css" />
+    <script src="https://unpkg.com/cardsJS/dist/cards.min.js" type="text/javascript"></script>
+
     <script src="sketch.js"></script>
     
   </head>
@@ -59,6 +63,9 @@
           </div>
           <div class="panel-body">
             <h3><b>Points in Hand : <span id="user1-amt-avail">1000</span></b></h3>
+            <div id="user-1-card" class="hand hhand-compact">
+                <!-- cards will be displayed here -->
+            </div>          
           </div>
         </div>
       </div>
@@ -69,6 +76,9 @@
           </div>
           <div class="panel-body">
             <b><h3>Points in Hand : <span id="user2-amt-avail">1000</span></b></h3>
+            <div id="user-2-card" class="hand hhand-compact">
+              <!-- cards will be displayed here -->
+            </div> 
           </div>
         </div>
       </div>

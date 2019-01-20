@@ -37,12 +37,32 @@ function onResponse(data){
 			$('#user1-amt-avail').html(data.user1.amt_avail);
 			$('#user2-amt-avail').html(data.user2.amt_avail);
 
+      if(data.total_bet == 40){
+        // display card
+        console.log("showing card");
+        id_of_div = "#user-"+(_index+1)+"-card";
+        html_content = "";
+        if (_index == 0){
+          for(var card of data.user1.list_of_cards){
+            html_content += "<img class='card' src='cards/"+card+".svg'> ";
+          }
+        }
+        else{
+          for(var card of data.user2.list_of_cards){
+            html_content += "<img class='card' src='cards/"+card+".svg'> ";
+          }
+        }
+        console.log(id_of_div);
+        console.log(html_content);
+        $(id_of_div).html(html_content);
+      }
+
       // in case if a player wins
       if(data.winner != -1){
         console.log("winner hua koi");
         $('#action-buttons').hide(transition_delay);
         $('#wait-for-opponent').hide(transition_delay);
-        msg_str = "User " + (winner+1) + " Won";
+        msg_str = "User " + (data.winner+1) + " Won";
         $('#winner-button').html(msg_str);
         $('#winner-button').show(transition_delay);
 

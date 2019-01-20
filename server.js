@@ -33,7 +33,7 @@ class Table{
 
         var cards = [];
         for(var ch of ['S','H','C','D']){
-            for (var i of ['1','2','3','4','5','6','7','8','9','J','Q','K','A']) {
+            for (var i of ['2','3','4','5','6','7','8','9','10','J','Q','K','A']) {
                 cards.push(i+ch);
             }
         }
