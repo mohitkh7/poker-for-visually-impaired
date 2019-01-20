@@ -40,21 +40,32 @@ function onResponse(data){
       if(data.total_bet == 40){
         // display card
         console.log("showing card");
-        id_of_div = "#user-"+(_index+1)+"-card";
-        html_content = "";
-        if (_index == 0){
+        if(_index == 0){
+          html_content = "";
           for(var card of data.user1.list_of_cards){
             html_content += "<img class='card' src='cards/"+card+".svg'> ";
           }
+          $("#user-1-card").html(html_content);
+
+          html_content = "";
+          for(var i=0; i<3; i++){
+            html_content += "<img class='card' src='cards/RED_BACK.svg'>";
+          }
+          $("#user-2-card").html(html_content);
         }
         else{
+          html_content = "";
           for(var card of data.user2.list_of_cards){
             html_content += "<img class='card' src='cards/"+card+".svg'> ";
           }
+          $("#user-2-card").html(html_content);
+
+          html_content = "";
+          for(var i=0; i<3; i++){
+            html_content += "<img class='card' src='cards/RED_BACK.svg'>";
+          }
+          $("#user-1-card").html(html_content);
         }
-        console.log(id_of_div);
-        console.log(html_content);
-        $(id_of_div).html(html_content);
       }
 
       // in case if a player wins
@@ -63,9 +74,20 @@ function onResponse(data){
         $('#action-buttons').hide(transition_delay);
         $('#wait-for-opponent').hide(transition_delay);
         msg_str = "User " + (data.winner+1) + " Won";
+        speak(msg_str);
         $('#winner-button').html(msg_str);
         $('#winner-button').show(transition_delay);
-
+        // show all cards
+        html_content = "";
+        for(var card of data.user1.list_of_cards){
+          html_content += "<img class='card' src='cards/"+card+".svg'> ";
+        }
+        $("#user-1-card").html(html_content);
+        html_content = "";
+        for(var card of data.user2.list_of_cards){
+          html_content += "<img class='card' src='cards/"+card+".svg'> ";
+        }
+        $("#user-2-card").html(html_content);
       }
       else{
         // rotate turns of player
@@ -98,18 +120,18 @@ function emitdata(){
 
 var myVoice = new p5.Speech(); // new P5.Speech object
 function setup()
-{	
-	myVoice.setRate(0.5);
-	//myRec.onResult = parseResult; // now in the constructor
-	// myRec.start(); // start engine
-	startButton();
+{ 
+  myVoice.setRate(0.5);
+  //myRec.onResult = parseResult; // now in the constructor
+  // myRec.start(); // start engine
+  startButton();
 }
 function speak(text)
-{	
-	console.log("in speak");
-	setTimeout(function() {
-	myVoice.speak(text);
-	}, 1000);
+{ 
+  console.log("in speak");
+  setTimeout(function() {
+  myVoice.speak(text);
+  }, 1000);
 }
 
 
@@ -128,20 +150,18 @@ var start_timestamp;
 
   recognition.onerror = function(event) {
     if (event.error == 'no-speech') {
-      start_img.src = 'mic.gif';
-      showInfo('info_no_speech');
+      console.log('info_no_speech');
       ignore_onend = true;
     }
     if (event.error == 'audio-capture') {
-      start_img.src = 'mic.gif';
-      showInfo('info_no_microphone');
+      console.log('info_no_microphone');
       ignore_onend = true;
     }
     if (event.error == 'not-allowed') {
       if (event.timeStamp - start_timestamp < 100) {
-        showInfo('info_blocked');
+        console.log('info_blocked');
       } else {
-        showInfo('info_denied');
+        console.log('info_denied');
       }
       ignore_onend = true;
     }
@@ -174,16 +194,45 @@ var start_timestamp;
         interim_transcript += event.results[i][0].transcript;
       }
     }
-	if (line=="play" && f==0) {
-		initial_setup();
-		speak("Game is starting , the initial amount is 20 points");
-		f=1;
-	}
-	if(line=="blind")
-	{
-		emitdata({'type':1,'_id':_id, '_name':_username,'current_bet_amt':_base});
-	}
-  };
+  if (''+line.toLowerCase()=="play" && f==0) {
+    initial_setup();
+    speak("Game is starting , the initial amount is 20 points");
+    console.log("Game is starting , the initial amount is 20 points")
+    f=1;
+  }
+  if(["chal","chaal"].indexOf(line.toLowerCase()))
+  {  
+    console.log('chal');
+    sendAction(_id, 'chaal');
+  }
+  else if(["pak","pack"].indexOf(line.toLowerCase()))
+  { 
+    console.log('pack'); 
+    sendAction(_id, 'pack');
+  }
+  else if(["show"].indexOf(line.toLowerCase()))
+  { 
+    console.log('show'); 
+    sendAction(_id, 'show');
+  }
+  else if(["raise","rase","ras"].indexOf(line.toLowerCase()))
+  { 
+    console.log('raise'); 
+    sendAction(_id, 'raise');
+  }
+  else {
+    console.log('try again');
+  }  
+};
+
+function sendAction(_id, action_name){
+    data1 = {
+      'id': _id,
+      'action': action_name,
+    }
+    socket.emit('sendResponse', data1);
+    console.log('data1', data1);
+}
 
 function startButton() {
   final_transcript = '';
