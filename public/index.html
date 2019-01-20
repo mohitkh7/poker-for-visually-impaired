@@ -14,7 +14,20 @@
     
   </head>
   <body>
-    <div class="text-center" style="margin-top: 100px;">
+    <div id="start">
+      <center>
+        <h1 style="color: #000">Welcome to a Awesome POKER</h1>
+        <button class="btn btn-lg" style="background:#000;margin-top:16%;padding:29px" onclick="startGame()">START</button>
+      </center>
+    </div>
+    <!-- <div id="wait1">
+      <center>
+      <div class="jumbotron" style="margin-top:20%">
+        <h3>Waiting for opponent 2!</h3>
+      </div>
+    </center>
+    </div> -->
+    <div class="text-center" style="margin-top: 60px;">
       <h4>Total Points Bet : <span id="total-bet">40</span></h4>
       <h4>Current Bet Point : <span id="current-bet-amt">20</span></h4>
     </div>
@@ -27,33 +40,36 @@
         <button value="raise" class="btn btn-lg btn-primary play-button">Raise</button>
       </div>
       <div id="wait-for-opponent">
-        <button class="btn btn-lg btn-default play-button">
+        <button class="btn btn-lg btn-default play-button" id="wait">
           Waiting for opponent action
         </button>
       </div>
+      <div id="winner">
+        <button id="winner-button" class="btn btn-lg btn-success">User Won</button>
+      </div>
     </div>
+    <br><br>
     <!-- // button section -->
 
-    <div class="row" style="margin-right: 10px; margin-left: 10px;">
-      <div class="col-sm-6">
+    <div class="row" style="margin-right: 10px; margin-left: 10px;text-align:center;">
+      <div class="col-sm-3 col-sm-push-3">
         <div class="panel panel-success">
           <div class="panel-heading">
-            User 1
+            <b>User 1</b>
           </div>
           <div class="panel-body">
-            <b>Points in Hand</b> : <span id="user1-amt-avail">1000</span>
+            <h3><b>Points in Hand : <span id="user1-amt-avail">1000</span></b></h3>
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3 col-sm-push-3">
         <div class="panel panel-danger">
           <div class="panel-heading">
-            User 2
+            <b>User 2</b>
           </div>
           <div class="panel-body">
-            <b>Points in Hand</b> : <span id="user2-amt-avail">1000</span>
+            <b><h3>Points in Hand : <span id="user2-amt-avail">1000</span></b></h3>
           </div>
-
         </div>
       </div>
     </div>
@@ -64,7 +80,7 @@
       <button id="bright-low" class="btn btn-md btn-default">Low bright</button>
       <button id="bright-reset" class="btn btn-md btn-default">reset bright</button>
     </div>
-    <div class="panel panel-warning footer">
+    <div class="panel panel-primary footer" style="font-size:20px;">
       <div class="panel-heading text-center">
         <b>Boot Value : </b>20 Points &nbsp;&nbsp;&nbsp;
         <b>Pot Limit :</b>2560 Points &nbsp;&nbsp;&nbsp;
@@ -95,6 +111,9 @@
     }
   </style>
   <script>
+    function startGame(){
+      $('#start').fadeOut();
+    }
     // script for zoom
     zoom_val = 100;
     $('#zoom-in').click(function(){
@@ -116,6 +135,7 @@
     });
     $('#bright-reset').click(function(){
       document.body.style.background = '#fff8e1'; 
-    })
+    });
+
   </script>
 </html>

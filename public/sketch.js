@@ -21,6 +21,8 @@ var _id,_username, _index, _base;
 var d = document;
 var transition_delay = 500;
 $(document).ready(function(){
+  // initial_setup();
+  $('#winner-button').hide();
 	handle_button_input();
 });
 
@@ -34,15 +36,29 @@ function onResponse(data){
 			$('#current-bet-amt').html(data.current_bet_amt);
 			$('#user1-amt-avail').html(data.user1.amt_avail);
 			$('#user2-amt-avail').html(data.user2.amt_avail);
-			if(data.turn_of_player == _index){
-				$('#action-buttons').show(transition_delay);
-				$('#wait-for-opponent').hide(transition_delay);
-			}
-			else{
-				$('#action-buttons').hide(transition_delay);
-				$('#wait-for-opponent').show(transition_delay);
 
-			}
+      // in case if a player wins
+      if(data.winner != -1){
+        console.log("winner hua koi");
+        $('#action-buttons').hide(transition_delay);
+        $('#wait-for-opponent').hide(transition_delay);
+        msg_str = "User " + (winner+1) + " Won";
+        $('#winner-button').html(msg_str);
+        $('#winner-button').show(transition_delay);
+
+      }
+      else{
+        // rotate turns of player
+  			if(data.turn_of_player == _index){
+  				$('#action-buttons').show(transition_delay);
+  				$('#wait-for-opponent').hide(transition_delay);
+  			}
+  			else{
+  				$('#action-buttons').hide(transition_delay);
+  				$('#wait-for-opponent').show(transition_delay);
+
+  			}
+      }
 			_base=data['current_bet_amt'];
 			_totalbet=data['total_bet'];
 		}
