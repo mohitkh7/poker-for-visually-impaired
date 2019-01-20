@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>
+    <script src="lib/p5.speech.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="sketch.js"></script>
+    
+  </head>
+  <body>
+    <div class="text-center" style="margin-top: 100px;">
+      <h4>Total Points Bet : <span id="total-bet">40</span></h4>
+      <h4>Current Bet Point : <span id="current-bet-amt">20</span></h4>
+    </div>
+    <!-- Button Section -->
+    <div class="button-section text-center">
+      <div id="action-buttons">
+        <button value="pack" class="btn btn-lg btn-danger play-button">Pack</button>
+        <button value="show" class="btn btn-lg btn-warning play-button">Show</button>
+        <button value="chaal" class="btn btn-lg btn-info play-button">Chaal</button>
+        <button value="raise" class="btn btn-lg btn-primary play-button">Raise</button>
+      </div>
+      <div id="wait-for-opponent">
+        <button class="btn btn-lg btn-default play-button">
+          Waiting for opponent action
+        </button>
+      </div>
+    </div>
+    <!-- // button section -->
+
+    <div class="row" style="margin-right: 10px; margin-left: 10px;">
+      <div class="col-sm-6">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            User 1
+          </div>
+          <div class="panel-body">
+            <b>Points in Hand</b> : <span id="user1-amt-avail">1000</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            User 2
+          </div>
+          <div class="panel-body">
+            <b>Points in Hand</b> : <span id="user2-amt-avail">1000</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="accesibility-buttons">
+      <button id="zoom-in" class="btn btn-md btn-success">++</button>
+      <button id="zoom-reset" class="btn btn-md btn-info">o</button>
+      <button id="zoom-out" class="btn btn-md btn-danger">--</button>
+      <button id="bright-low" class="btn btn-md btn-default">Low bright</button>
+      <button id="bright-reset" class="btn btn-md btn-default">reset bright</button>
+    </div>
+    <div class="panel panel-warning footer">
+      <div class="panel-heading text-center">
+        <b>Boot Value : </b>20 Points &nbsp;&nbsp;&nbsp;
+        <b>Pot Limit :</b>2560 Points &nbsp;&nbsp;&nbsp;
+        <b>Max Bet :</b>640 Points &nbsp;&nbsp;&nbsp;
+      </div>
+      <div class="panel-body" style="height: 0px">
+      </div>
+    </div>
+  </body>
+  <style>
+    .footer{
+      position: fixed;
+      bottom:-50px;
+      /*background: #faebcc;*/
+      /*height:70px;*/
+      width:100%;
+    }
+    .button-section{
+      margin-top:30px;
+      margin-bottom:20px;
+    }
+    .play-button{
+      margin:20px;
+    }
+    body{
+      background: #fff8e1;
+      /*background: rgba(100, 100, 100, 0.8);*/
+    }
+  </style>
+  <script>
+    // script for zoom
+    zoom_val = 100;
+    $('#zoom-in').click(function(){
+      zoom_val += 10;
+      document.body.style.zoom = zoom_val+"%" 
+    });
+    $('#zoom-out').click(function(){
+      zoom_val -= 10;
+      document.body.style.zoom = zoom_val+"%" 
+    });
+    $('#zoom-reset').click(function(){
+      zoom_val = 100;
+      document.body.style.zoom = zoom_val+"%" 
+    });
+
+    // script for brightness
+    $('#bright-low').click(function(){
+      document.body.style.background = 'rgba(' + [100,100,100,0.8].join(',') + ')'; 
+    });
+    $('#bright-reset').click(function(){
+      document.body.style.background = '#fff8e1'; 
+    })
+  </script>
+</html>
