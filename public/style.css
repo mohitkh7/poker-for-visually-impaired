@@ -5,3 +5,13 @@ html, body {
 canvas {
   display: block;
 }
+#wait{
+	background-color:red;
+	color:#fff;
+	animation: flick ease 2s infinite;
+}
+@keyframes flick{
+	0%{ background-color:#fff; }
+	50%{ transform: scale(1.2,1.2); }
+	100%{ background-color:red; }
+}
